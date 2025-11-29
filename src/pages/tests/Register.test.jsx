@@ -1,5 +1,5 @@
 import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import Register from '../Register';
@@ -19,6 +19,10 @@ function renderWithRouter(ui) {
 }
 
 describe('Register Component', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('renders form', () => {
     renderWithRouter(<Register />);
     expect(screen.getByText(/Create Account/i)).toBeInTheDocument();
@@ -26,7 +30,7 @@ describe('Register Component', () => {
 
   it('submits form', async () => {
     const mockRegister = vi.fn().mockResolvedValue({ userId: 1 });
-    api.registerUser = mockRegister;
+    vi.mocked(api.registerUser).mockImplementation(mockRegister);
 
     renderWithRouter(<Register />);
 
