@@ -10,20 +10,21 @@ function Dashboard() {
   const [filter, setFilter] = useState({ type: '', status: '' });
 
   useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        setLoading(true);
+        const data = await getAllActivities(filter.type, filter.status);
+        setActivities(data);
+      } catch (error) {
+        console.error('Failed to fetch activities:', error);
+        setError('Failed to load activities');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchActivities();
   }, [filter]);
-
-  const fetchActivities = async () => {
-    try {
-      setLoading(true);
-      const data = await getAllActivities(filter.type, filter.status);
-      setActivities(data);
-    } catch (err) {
-      setError('Failed to load activities');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const getStatusColor = (status) => {
     switch (status) {
