@@ -44,7 +44,7 @@ function Dashboard() {
       {/* CREATE BUTTON under heading */}
       <div style={{ marginBottom: '25px' }}>
         <button
-          onClick={() => navigate('/activities/new')}
+          onClick={() => navigate('/create-activity')}
           style={{
             padding: '10px 20px',
             backgroundColor: '#007bff',
