@@ -47,4 +47,17 @@ export const deleteActivity = async (id) => {
   return response.data;
 };
 
+export const getAllActivities = async (type = '', status = '') => {
+  let url = `${API_BASE_URL}/activities`;
+  const params = new URLSearchParams();
+  if (type) params.append('type', type);
+  if (status) params.append('status', status);
+  if (params.toString()) url += `?${params.toString()}`;
+
+  const response = await fetch(url);
+  if (!response.ok) throw new Error('Failed to fetch activities');
+  return await response.json();
+};
+
+
 export default api;
