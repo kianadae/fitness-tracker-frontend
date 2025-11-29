@@ -36,13 +36,20 @@ function Register() {
   return (
     <div style={{ maxWidth: '400px', margin: '50px auto', padding: '30px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
       <h2>Create Account</h2>
-      
-      {error && <div style={{ color: 'red', padding: '10px', background: '#ffebee', borderRadius: '4px', marginBottom: '20px' }}>{error}</div>}
+
+      {error && (
+        <div style={{ color: 'red', padding: '10px', background: '#ffebee', borderRadius: '4px', marginBottom: '20px' }}>
+          {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>First Name *</label>
+          <label htmlFor="firstName" style={{ display: 'block', marginBottom: '5px' }}>
+            First Name *
+          </label>
           <input
+            id="firstName"
             type="text"
             name="firstName"
             value={formData.firstName}
@@ -53,8 +60,11 @@ function Register() {
         </div>
 
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Last Name *</label>
+          <label htmlFor="lastName" style={{ display: 'block', marginBottom: '5px' }}>
+            Last Name *
+          </label>
           <input
+            id="lastName"
             type="text"
             name="lastName"
             value={formData.lastName}
@@ -65,8 +75,11 @@ function Register() {
         </div>
 
         <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Email *</label>
+          <label htmlFor="email" style={{ display: 'block', marginBottom: '5px' }}>
+            Email *
+          </label>
           <input
+            id="email"
             type="email"
             name="email"
             value={formData.email}
@@ -77,8 +90,11 @@ function Register() {
         </div>
 
         <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Password * (min 6 characters)</label>
+          <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>
+            Password * (min 6 characters)
+          </label>
           <input
+            id="password"
             type="password"
             name="password"
             value={formData.password}
