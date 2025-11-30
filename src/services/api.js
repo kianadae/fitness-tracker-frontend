@@ -105,7 +105,6 @@ export const checkHealth = async () => {
   return await response.json();
 };
 
-};
 
 /* ------------------ Health Check ------------------ */
 export const checkHealth = async () => {
