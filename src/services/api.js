@@ -105,14 +105,7 @@ export const checkHealth = async () => {
   return await response.json();
 };
 
-
-/* ------------------ Health Check ------------------ */
-export const checkHealth = async () => {
-  const response = await fetch(`${API_BASE_URL}/health`);
-  if (!response.ok) throw new Error('API health check failed');
-  return await response.json();
-};
-
+/* ------------------ Export all APIs ------------------ */
 export default {
   registerUser,
   loginUser,
@@ -125,5 +118,4 @@ export default {
   getUserActivities,
   getActivitiesByDateRange,
   checkHealth,
-};
 };
