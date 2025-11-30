@@ -4,8 +4,7 @@ import { updateActivityStatus } from '../services/api';
 function StatusUpdater({ activityId, currentStatus, onStatusUpdated, compact = false }) {
   const [status, setStatus] = useState(currentStatus);
   const [updating, setUpdating] = useState(false);
-  const [error, setError] = useState('');
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [updateError, setUpdateError] = useState('');
 
   const statusOptions = [
     { value: 'Planned', label: 'Planned', color: '#6c757d', icon: '📋' },
@@ -20,7 +19,7 @@ function StatusUpdater({ activityId, currentStatus, onStatusUpdated, compact = f
     const previousStatus = status;
     setStatus(newStatus);
     setUpdating(true);
-    setError('');
+    setUpdateError('');
 
     try {
       await updateActivityStatus(activityId, newStatus);
@@ -36,10 +35,8 @@ function StatusUpdater({ activityId, currentStatus, onStatusUpdated, compact = f
     } catch (err) {
       // Rollback on error
       setStatus(previousStatus);
-      setError('Failed to update status. Please try again.');
-      
-      // Clear error after 3 seconds
-      setTimeout(() => setError(''), 3000);
+      setUpdateError('Failed to update status');
+      console.error('Status update failed:', err);
     } finally {
       setUpdating(false);
     }
@@ -103,32 +100,9 @@ function StatusUpdater({ activityId, currentStatus, onStatusUpdated, compact = f
   // Full mode for activity details page (buttons)
   return (
     <div style={{ marginTop: '15px' }}>
-      <label style={{ 
-        display: 'block', 
-        marginBottom: '10px', 
-        fontWeight: '500',
-        fontSize: '16px',
-        color: '#333'
-      }}>
-        Update Status:
-      </label>
-
-      {/* Error Message */}
-      {error && (
-        <div style={{ 
-          color: '#dc3545',
-          backgroundColor: '#f8d7da',
-          padding: '10px 12px',
-          borderRadius: '4px',
-          marginBottom: '10px',
-          fontSize: '13px',
-          border: '1px solid #f5c6cb',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px'
-        }}>
-          <span>⚠️</span>
-          <span>{error}</span>
+      {updateError && (
+        <div style={{ color: 'red', fontSize: '13px', marginBottom: '8px' }}>
+          {updateError}
         </div>
       )}
 
