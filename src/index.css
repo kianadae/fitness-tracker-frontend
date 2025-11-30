@@ -11,6 +11,31 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* ---------- Theme Variables (Light/Dark) ---------- */
+  --bg: #ffffff;
+  --card-bg: #ffffff;
+  --text: #111;
+  --text-muted: #555;
+  --border: #ccc;
+  --primary: #007bff;
+  --primary-hover: #005ec2;
+  --error-bg: #ffebee;
+  --error-text: #b00020;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --card-bg: #1e1e1e;
+    --text: #f2f2f2;
+    --text-muted: #bbb;
+    --border: #333;
+    --primary: #4d9aff;
+    --primary-hover: #1877ff;
+    --error-bg: #3b1212;
+    --error-text: #ff8a80;
+  }
 }
 
 a {
@@ -24,6 +49,9 @@ a:hover {
 
 body {
   margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
 }
 
 h1 {
@@ -61,4 +89,97 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* ========================================================= */
+/* ============ Modern Form Styles (Dark + Light) =========== */
+/* ========================================================= */
+
+.register-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 32px;
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: background 0.3s, color 0.3s;
+}
+
+.register-title {
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--text-muted);
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s;
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-primary:disabled {
+  background: #888;
+  cursor: not-allowed;
+}
+
+.error-box {
+  background: var(--error-bg);
+  color: var(--error-text);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.login-link {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--primary);
+  text-align: center;
+}
+.login-link a {
+  color: var(--primary);
+  text-decoration: none;
+}
+.login-link a:hover {
+  text-decoration: underline;
 }
