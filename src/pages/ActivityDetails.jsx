@@ -17,7 +17,7 @@ function ActivityDetails() {
         setError('');
         const data = await getActivityById(id);
         setActivity(data);
-      } catch (err) {
+      } catch (error) {
         console.error('Failed to load activity:', err);
         setError('Failed to load activity details. Activity may not exist.');
       } finally {
