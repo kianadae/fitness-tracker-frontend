@@ -17,8 +17,8 @@ function ActivityDetails() {
         setError('');
         const data = await getActivityById(id);
         setActivity(data);
-      } catch (error) {
-        console.error('Failed to load activity:', err);
+      } catch (fetchError) { 
+        console.error('Failed to load activity:', fetchError);
         setError('Failed to load activity details. Activity may not exist.');
       } finally {
         setLoading(false);
@@ -32,7 +32,8 @@ function ActivityDetails() {
     try {
       await deleteActivity(id);
       navigate('/dashboard');
-    } catch (err) {
+    } catch (deleteError) {  // Changed to deleteError
+      console.error('Failed to delete activity:', deleteError);
       setError('Failed to delete activity');
       setShowDeleteConfirm(false);
     }
