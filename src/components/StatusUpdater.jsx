@@ -4,7 +4,7 @@ import { updateActivityStatus } from '../services/api';
 function StatusUpdater({ activityId, currentStatus, onStatusUpdated }) {
   const [status, setStatus] = useState(currentStatus);
   const [updating, setUpdating] = useState(false);
-  const [error, setError] = useState('');
+  const [updateError, setUpdateError] = useState('');
 
   const statusOptions = [
     { value: 'Planned', label: 'Planned', color: '#6c757d' },
@@ -18,7 +18,7 @@ function StatusUpdater({ activityId, currentStatus, onStatusUpdated }) {
     const previousStatus = status;
     setStatus(newStatus);
     setUpdating(true);
-    setError('');
+    setUpdateError('');
 
     try {
       await updateActivityStatus(activityId, newStatus);
@@ -27,9 +27,10 @@ function StatusUpdater({ activityId, currentStatus, onStatusUpdated }) {
         // simple feedback, can replace with toast library
         alert(`Status updated to ${newStatus}`);
       }
-    } catch (error) {
+    } catch (err) {
       setStatus(previousStatus);
-      setError('Failed to update status');
+      setUpdateError('Failed to update status');
+      console.error('Status update failed:', err);
     } finally {
       setUpdating(false);
     }
@@ -37,9 +38,9 @@ function StatusUpdater({ activityId, currentStatus, onStatusUpdated }) {
 
   return (
     <div style={{ marginTop: '15px' }}>
-      {error && (
+      {updateError && (
         <div style={{ color: 'red', fontSize: '13px', marginBottom: '8px' }}>
-          {error}
+          {updateError}
         </div>
       )}
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
