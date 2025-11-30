@@ -27,7 +27,7 @@ function StatusUpdater({ activityId, currentStatus, onStatusUpdated }) {
         // simple feedback, can replace with toast library
         alert(`Status updated to ${newStatus}`);
       }
-    } catch (err) {
+    } catch (error) {
       setStatus(previousStatus);
       setError('Failed to update status');
     } finally {
