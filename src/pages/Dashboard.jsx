@@ -1,7 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllActivities } from '../services/api';
-import StatusDropdown from '../components/StatusDropdown';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -10,36 +9,23 @@ function Dashboard() {
   const [error, setError] = useState('');
   const [filter, setFilter] = useState({ type: '', status: '' });
 
-  // Use useCallback to memoize the fetch function and avoid unnecessary re-renders/fetches
-  const fetchActivities = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError('');
-      const data = await getAllActivities(filter.type, filter.status);
-      setActivities(data);
-    } catch (error) {
-      console.error('Failed to fetch activities:', error);
-      setError('Failed to load activities');
-    } finally {
-      setLoading(false);
-    }
-  }, [filter]); // Re-run effect when filter changes
-
   useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        setLoading(true);
+        const data = await getAllActivities(filter.type, filter.status);
+        setActivities(data);
+      } catch (error) {
+        console.error('Failed to fetch activities:', error);
+        setError('Failed to load activities');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchActivities();
-  }, [fetchActivities]);
+  }, [filter]);
 
-  // Handler to update the status of an activity in the local state
-  const handleStatusUpdated = (activityId, newStatus) => {
-    setActivities(prevActivities =>
-      prevActivities.map(a =>
-        a.id === activityId ? { ...a, status: newStatus } : a
-      )
-    );
-  };
-
-  // NOTE: This getStatusColor function is now redundant since StatusDropdown should handle coloring, 
-  // but it is kept in case it's used elsewhere or for styling the dropdown itself.
   const getStatusColor = (status) => {
     switch (status) {
       case 'Planned': return '#6c757d';
@@ -111,13 +97,13 @@ function Dashboard() {
         {activities.map((activity) => (
           <div
             key={activity.id}
-            // Use this parent div for visual styling and mouse effects
+            onClick={() => navigate(`/activities/${activity.id}`)}
             style={{
               border: '1px solid #ddd',
               borderRadius: '8px',
               padding: '15px',
               cursor: 'pointer',
-              transition: '0.2s ease',
+              transition: '0.2s ease'
             }}
             onMouseEnter={(e) =>
               (e.currentTarget.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)')
@@ -126,60 +112,52 @@ function Dashboard() {
               (e.currentTarget.style.boxShadow = 'none')
             }
           >
-            {/* Inner div contains card content, excluding the dropdown, and handles navigation click */}
-            <div 
-                onClick={() => navigate(`/activities/${activity.id}`)}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginBottom: '10px'
+              }}
             >
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginBottom: '10px'
-                  }}
-                >
-                  <span
-                    style={{
-                      backgroundColor: '#e7f3ff',
-                      padding: '4px 8px',
-                      borderRadius: '4px',
-                      fontSize: '12px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    {activity.type}
-                  </span>
+              <span
+                style={{
+                  backgroundColor: '#e7f3ff',
+                  padding: '4px 8px',
+                  borderRadius: '4px',
+                  fontSize: '12px',
+                  fontWeight: 'bold'
+                }}
+              >
+                {activity.type}
+              </span>
 
-                  {/* NOTE: The original status badge is removed here. 
-                      The StatusDropdown will now render the current status. */}
-
-                </div>
-
-                <h3>{activity.name}</h3>
-                <p style={{ color: '#666', fontSize: '14px' }}>
-                  {activity.description}
-                </p>
-
-                <p style={{ marginTop: '10px', fontSize: '12px', color: '#999' }}>
-                  {new Date(activity.date).toLocaleDateString()}
-                </p>
+              <span
+                style={{
+                  backgroundColor: getStatusColor(activity.status),
+                  color: 'white',
+                  padding: '4px 8px',
+                  borderRadius: '4px',
+                  fontSize: '12px'
+                }}
+              >
+                {activity.status}
+              </span>
             </div>
-            
-            {/* StatusDropdown placed at the bottom of the card */}
-            {/* Stop click propagation so clicking the dropdown doesn't trigger navigation */}
-            <div onClick={(e) => e.stopPropagation()} style={{ marginTop: '10px' }}>
-                <StatusDropdown 
-                  activityId={activity.id}
-                  currentStatus={activity.status}
-                  compact={true}
-                  onStatusUpdated={handleStatusUpdated} // Use the centralized handler
-                />
-            </div>
+
+            <h3>{activity.name}</h3>
+            <p style={{ color: '#666', fontSize: '14px' }}>
+              {activity.description}
+            </p>
+
+            <p style={{ marginTop: '10px', fontSize: '12px', color: '#999' }}>
+              {new Date(activity.date).toLocaleDateString()}
+            </p>
           </div>
         ))}
       </div>
 
       {/* EMPTY STATE */}
-      {activities.length === 0 && !loading && !error && (
+      {activities.length === 0 && !loading && (
         <div style={{ textAlign: 'center', marginTop: '40px', color: '#999' }}>
           <p>No activities found. Create your first activity!</p>
         </div>

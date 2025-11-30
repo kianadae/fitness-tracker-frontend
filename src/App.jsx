@@ -6,8 +6,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import CreateActivity from './pages/CreateActivity';
 import ActivityDetails from './pages/ActivityDetails';
-import ActivityDetails from './pages/EditActivity';
-import './App.css';
+import EditActivity from './pages/EditActivity';
 
 function AppContent() {
   const location = useLocation();
