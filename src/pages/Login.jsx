@@ -47,7 +47,8 @@ function Login() {
       const data = await response.json();
       
       // Store user data in localStorage
-      localStorage.setItem('user', JSON.stringify(data));
+      // localStorage.setItem('user', JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(response));
       
       // Redirect to dashboard (window.location for navigation)
       window.location.href = '/dashboard';

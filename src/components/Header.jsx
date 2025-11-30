@@ -60,6 +60,21 @@ function Header() {
           >
             New Activity
           </button>
+          
+          <button
+            onClick={() => navigate('/profile')}
+            style={{
+              background: isActive('/profile') ? 'rgba(255,255,255,0.2)' : 'transparent',
+              color: 'white',
+              border: 'none',
+              padding: '8px 16px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}
+          >
+            Profile
+          </button>
 
           {user.email && (
             <>

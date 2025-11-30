@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import CreateActivity from './pages/CreateActivity';
 import ActivityDetails from './pages/ActivityDetails';
 import EditActivity from './pages/EditActivity';
+import Profile from './pages/Profile';
 
 function AppContent() {
   const location = useLocation();
@@ -25,6 +26,7 @@ function AppContent() {
         <Route path="/create-activity" element={<CreateActivity />} />
         <Route path="/activities/:id" element={<ActivityDetails />} />
         <Route path="/activities/:id/edit" element={<EditActivity />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );
