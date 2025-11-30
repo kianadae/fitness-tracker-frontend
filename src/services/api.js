@@ -105,6 +105,7 @@ export const checkHealth = async () => {
   return await response.json();
 };
 
+/* ------------------ Export all APIs ------------------ */
 export default {
   registerUser,
   loginUser,
