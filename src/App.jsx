@@ -11,7 +11,7 @@ import Profile from './pages/Profile';
 
 function AppContent() {
   const location = useLocation();
-  const hideHeaderPaths = ['/home', '/register', '/login'];
+  const hideHeaderPaths = ['/register', '/login'];
   const showHeader = !hideHeaderPaths.includes(location.pathname);
 
   return (
