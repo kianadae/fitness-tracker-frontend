@@ -5,6 +5,7 @@ function StatusUpdater({ activityId, currentStatus, onStatusUpdated, compact = f
   const [status, setStatus] = useState(currentStatus);
   const [updating, setUpdating] = useState(false);
   const [updateError, setUpdateError] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const statusOptions = [
     { value: 'Planned', label: 'Planned', color: '#6c757d', icon: '📋' },
